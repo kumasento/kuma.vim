@@ -110,6 +110,9 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
+" Pandoc
+let g:pandoc#spell#enabled = 0
+
 """""""""""""""""""""""SHORTCUTS""""""""""""""""""""""""""""""""""""
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>
