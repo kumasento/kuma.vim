@@ -1,5 +1,14 @@
+" .vimrc file for Vincent Zhao <vincentzhaorz@gmail.com>
+" Last updated: 2016.10.26
+" 
+" Thanks for the great advices from https://dougblack.io/words/a-good-vimrc.html#wrap
+"
 
-"""""""""""""""""""""""""VUNDLE"""""""""""""""""""""""""""""""""""
+" Main content
+" Basic Configuration {{{
+
+" }}}
+" Vundle Configuration {{{
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -42,6 +51,12 @@ Plugin 'junegunn/vim-easy-align'
 "" Pandoc
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
+"" Theme
+Plugin 'sjl/badwolf'
+"" Undo
+Plugin 'sjl/gundo.vim'
+"" ag
+Plugin 'rking/ag.vim'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
@@ -74,25 +89,8 @@ filetype plugin on
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-
-"""""""""""""""""""""""CONFIGURE DIRECTORY""""""""""""""""""""""""""
-" Swap file directory
-set dir=$HOME/.vimtemp
-" Backup file directory
-set backupdir=$HOME/.vimbackup
-" Configure persistant undo options
-if version >= 703
-  set undofile
-  set undodir=$HOME/.vimundo
-endif
-
-""""""""""""""""""""""CONFIGURE COLOR""""""""""""""""""""""""""""""
-set t_Co=256
-
-"""""""""""""""""""""CONFIGURE LANGUAGE"""""""""""""""""""""""""""
-let g:filetype_pl="prolog"
-
-""""""""""""""""""""""CONFIGURE PLUGINS"""""""""""""""""""""""""""
+" }}}
+" Vundle Plugins Configure {{{
 let g:vim_markdown_folding_disabled = 1
 
 let g:used_javascript_libs = 'angularjs,angularui'
@@ -113,9 +111,149 @@ nmap ga <Plug>(EasyAlign)
 " Pandoc
 let g:pandoc#spell#enabled = 0
 
-"""""""""""""""""""""""SHORTCUTS""""""""""""""""""""""""""""""""""""
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>
+
+" }}}
+" Color {{{
+" enable syntax highlighting. 
+" NOTE: a short discussion on 'on' vs 'enable': http://stackoverflow.com/questions/11272501/vim-default-syntax-highlighting
+syntax enable
+" The badwolf colorscheme
+" NOTE: configured by "Plugin 'sjl/badwolf'"
+colorscheme badwolf
+" }}}
+" Space and Tabs {{{
+
+" number of spaces that a <Tab> in the file counts for
+" I LOVE 2 SPACES
+set tabstop=2
+
+" number of spaces that a <Tab> counts for while performing **editing** operations
+set softtabstop=2
+
+" tabs are spaces
+set expandtab
+
+" }}}
+" UI Config {{{
+
+" show line numbers
+set number
+
+" show command in bottom bar
+set showcmd
+
+" highlight current line
+set cursorline
+
+" load filetype-specific indent files
+filetype indent on
+
+" visual autocomplete for ONLY command menu
+set wildmenu
+
+" lazy redraw window (DONT UNDERSTAND)
+set lazyredraw
+
+" highlight parenthesis matching
+set showmatch
+
+" }}}
+" Searching {{{
+" searching words or patterns in VIM
+
+" search as characters are entered
+set incsearch
+
+" highlight matches
+set hlsearch
+
+" turn off search highlight
+" Great explanation on mapping
+" http://stackoverflow.com/questions/3776117/what-is-the-difference-between-the-remap-noremap-nnoremap-and-vnoremap-mapping
+nnoremap <leader><space> :nohlsearch<CR>
+
+" }}}
+" Folding {{{
+
+" enable folding
+set foldenable
+
+" open most folds by default
+set foldlevelstart=10
+
+" at most only 10 folds are nested
+set foldnestmax=10
+
+" space open and close
+nnoremap <space> za
+
+" set fold method to make fold based on indent level
+" set foldmethod=indent
+
+" }}}
+" Movement {{{
+
+" move vertically by VISUAL line
+nnoremap j gj
+nnoremap k gk
+
+" move to beginning and end of line
+nnoremap B ^
+nnoremap E $
+
+" $/^ doesn't do anything, just train yourself
+nnoremap $ <nop>
+nnoremap ^ <nop>
+
+" highlight last inserted text
+nnoremap gV `[v`]
+
+" }}}
+" Leader Shortcuts {{{
+
+" leader key
+let mapleader=","
+
+" jk is escape, just hit them sequentially and quickly to use ESC
+inoremap jk <esc>
+
+" toggle gundo: Graphical Undo
+nnoremap <leader>u :GundoToggle<CR>
+
+" edit vimrc/zshrc and load vimrc bindings
+nnoremap <leader>ev :vsp $MYVIMRC<CR>
+nnoremap <leader>ez :vsp ~/.zshrc<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
+
+" save session
+nnoremap <leader>s :mksession<CR>
+
+" open ag.vim
+nnoremap <leader>a :Ag<CR>
+
+" }}}
+" Directory configure {{{
+
+" Swap file directory
+set dir=$HOME/.vimtemp
+
+" Backup file directory
+set backupdir=$HOME/.vimbackup
+
+" Configure persistant undo options
+if version >= 703
+  set undofile
+  set undodir=$HOME/.vimundo
+endif
+
+" }}}
+" Archive {{{
+
+set t_Co=256
+
+let g:filetype_pl="prolog"
 
 " Archive configuration
 " Configuration file for vim
@@ -134,7 +272,6 @@ endif
 set nocompatible" Use Vim defaults instead of 100% vi compatibility
 set backspace=2" more powerful backspacing
 
-syntax on
 
 autocmd InsertLeave * se nocul
 autocmd InsertEnter * se cul
@@ -143,33 +280,23 @@ set smartindent
 set autoindent
 set confirm
 
-set tabstop=2
 set shiftwidth=2
-set expandtab
 
 " C++ configuration
 set cinoptions+=g0
 
-set number
-set hlsearch
-set incsearch
 set gdefault
 set encoding=utf-8
 set fileencodings=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936,utf-16,big5,euc-jp,latin1
 set cmdheight=2
 set ruler
 set laststatus=2
-set showcmd
 set scrolloff=3
-set showmatch
 set matchtime=5
 set autowrite
-set wildmenu
 set linespace=2
 set whichwrap=b,s,<,>,[,]
 set nowrap
-
-filetype plugin indent on
 
 vnoremap $1 <esc>`>a)<esc>`<i(<esc>
 vnoremap $2 <esc>`>a]<esc>`<i[<esc>
@@ -206,3 +333,8 @@ endfunc
 au BufWrite /private/tmp/crontab.* set nowritebackup
 " Don't write backup file if vim is being called by "chpass"
 au BufWrite /private/etc/pw.* set nowritebackup
+" }}}
+
+" Folding for this file
+set modelines=1
+" vim:foldmethod=marker:foldlevel=0
