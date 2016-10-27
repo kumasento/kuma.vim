@@ -190,7 +190,7 @@ set foldnestmax=10
 nnoremap <space> za
 
 " set fold method to make fold based on indent level
-" set foldmethod=indent
+set foldmethod=marker
 
 " }}}
 " Movement {{{
