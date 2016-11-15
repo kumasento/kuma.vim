@@ -37,6 +37,8 @@ Plugin 'tpope/vim-rails'
 Plugin 'rust-lang/rust.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'lambdatoast/elm.vim'
+Plugin 'leafgarland/typescript-vim'
 "" JavaScript
 Plugin 'pangloss/vim-javascript'
 Plugin 'othree/javascript-libraries-syntax.vim'
